@@ -13,6 +13,9 @@ import {
 	ModalDismissReasons
 } from '@ng-bootstrap/ng-bootstrap';
 import * as $ from "jquery";
+import * as moment from 'moment';
+
+const messageKey = 'failedMessages';
 
 @Component({
 	selector: 'chat-box-app',
@@ -31,23 +34,26 @@ export class ChatBoxComponent {
 	userMessages: any = [];
 	userLists: any;
 
+	currentDate = moment();
+	time = this.currentDate.fromNow();
 	constructor(private modalService: NgbModal, private userService: UserService, private connectionService: ConnectionService) {
 		this.userId = this.randomIntFromInterval(1, 5);
 		this.fetchUserById(this.userId);
 		this.connectionService.monitor().subscribe(isConnected => {
 
 			if (this.isConnected) {
-				this.failedMessages.forEach(element => {
-					if (element.user_id && element.message) {
-						this.newMessage = element.message;
-						this.userId = element.user_id;
-						this.sendMessage();
-					}
-				});
+				this.failedMessages = JSON.parse(localStorage.getItem(messageKey))|| [];
+				for(let j = 0; j < this.failedMessages.length; j+2){
+					this.newMessage = this.failedMessages[j].message;
+					this.userId = this.failedMessages[j].user_id;
+					this.failedMessages.splice(j, 1);
+					this.sendMessage();
+				}
+				localStorage.setItem(messageKey, JSON.stringify(this.failedMessages));
+				this.failedMessageCount = this.failedMessages.length;
 			}
 
 		})
-
 		this.failedMessageCount = this.failedMessages.length;
 	}
 
@@ -82,6 +88,7 @@ export class ChatBoxComponent {
 					},
 					error => {
 						this.failedMessages.push(messageBody);
+						localStorage.setItem(messageKey, JSON.stringify(this.failedMessages));
 						console.log(error);
 						this.failedMessageCount = this.failedMessages.length;
 						this.changeSendButtonColour();
