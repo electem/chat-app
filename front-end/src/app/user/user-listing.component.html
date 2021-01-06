@@ -1,20 +1,13 @@
 <div class="content" role="main" style="margin-top: 20px;">
-	<!-- <div>
-    <button class="btn btn-success"  style="float: right;margin-right: 10%;background-color: #0363f4"> Message {{unSendMessage}}</button>
-  </div> -->
-
-
 	<div class="col-md-6 user-container">
-
-		<div *ngFor="let user of userLists" class="table table-striped" style="background-color: #80808057;">
+		<div *ngFor="let user of userLists" class="table table-striped">
 			<div id="parent">
 				<div id="left">
-					<!-- <img ng-src = "user.image" /> -->
 					<img src="https://source.unsplash.com/100x80/?product" />
 				</div>
 				<div (click)="fetchUserMessageById(user.id)" id="right">
 					<b>{{user.name}}</b>
-					<div *ngIf="showUserMessage">
+					<div *ngIf="user.showMessage">
 						<div *ngFor="let msg of userMessages">
 							{{msg.message}}
 						</div>

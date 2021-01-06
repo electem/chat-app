@@ -1,6 +1,8 @@
 import {
 	Component
 } from '@angular/core';
+import {UserService} from '../user-service.service';
+import { ConnectionService } from 'ng-connection-service';
 
 import {
 	NgbModal,
@@ -13,26 +15,54 @@ import {
 })
 export class ChatBoxComponent {
 	closeResult = '';
+    userId = 1;
+    newMessage = '';
+	failedMessages: any= [];
+	profileName = 'Echo Bot';
+	isConnected = true;
+    noInternetConnection: boolean;
 
-	constructor(private modalService: NgbModal) {}
+	constructor(private modalService: NgbModal, private userService: UserService, private connectionService: ConnectionService) {
+		this.connectionService.monitor().subscribe(isConnected => {
+
+			if (this.isConnected) {
+				this.failedMessages.forEach(element => {
+					if (element.user_id && element.message) {
+						this.newMessage = element.message;
+						this.userId = element.user_id;
+						this.sendMessage();
+					  }
+				});
+			}
+
+		  })
+	}
 
 	open(content) {
 		this.modalService.open(content, {
 			ariaLabelledBy: 'modal-basic-title'
 		}).result.then((result) => {
 			this.closeResult = `Closed with: ${result}`;
+			this.sendMessage();
 		}, (reason) => {
-			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			this.closeResult = `Dismissed`;
 		});
 	}
 
-	private getDismissReason(reason: any): string {
-		if (reason === ModalDismissReasons.ESC) {
-			return 'by pressing ESC';
-		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-			return 'by clicking on a backdrop';
-		} else {
-			return `with: ${reason}`;
-		}
-	}
+	sendMessage() {
+		const messageBody = {
+		  message: this.newMessage,
+		  user_id: this.userId
+		};
+		this.userService.sendMessage(messageBody)
+		  .subscribe(
+			response => {
+			  console.log(response);
+			},
+			error => {
+			  this.failedMessages.push(messageBody);
+			  console.log(error);
+			});
+	  }
+
 }
