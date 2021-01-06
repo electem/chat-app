@@ -1,29 +1,42 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor, HttpHeaders
+	Injectable
+} from '@angular/core';
+import {
+	HttpRequest,
+	HttpHandler,
+	HttpEvent,
+	HttpInterceptor,
+	HttpHeaders
 } from '@angular/common/http';
-import { UserService } from './service/user-service.service';
-import { Observable } from 'rxjs';
-import { Base64 } from 'js-base64';
+import {
+	UserService
+} from './service/user-service.service';
+import {
+	Observable
+} from 'rxjs';
+import {
+	Base64
+} from 'js-base64';
+import {
+	environment
+} from '../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class AppCommonServiceService implements HttpInterceptor {
-  auth = Base64.encode("API_USER:pwd12#");
-  constructor(public userService: UserService) { }
 
+	auth = Base64.encode(environment.base64APIAuth);
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+	constructor(public userService: UserService) {}
 
-    request = request.clone({
-      setHeaders: {
-        Authorization: `Basic ${this.auth}`
-      }
-    });
-    return next.handle(request);
-  }
+	intercept(request: HttpRequest < any > , next: HttpHandler): Observable < HttpEvent < any >> {
+
+		request = request.clone({
+			setHeaders: {
+				Authorization: `Basic ${this.auth}`
+			}
+		});
+		return next.handle(request);
+	}
 }
