@@ -14,7 +14,7 @@ import {
 	UserListingComponent
 } from './user/user-listing.component';
 import {
-	HttpClientModule
+	HttpClientModule, HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import {
 	UserService
@@ -22,17 +22,27 @@ import {
 import {
 	ChatBoxComponent
 } from './chat-box/chatbox.component';
-import {ConnectionServiceModule} from 'ng-connection-service';
+import { ConnectionServiceModule } from 'ng-connection-service';
+import {
+	AppCommonServiceService
+} from './app.common.service.service';
 
 @NgModule({
 	declarations: [AppComponent, UserListingComponent, ChatBoxComponent],
 	imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    ConnectionServiceModule ],
-	providers: [UserService],
+		BrowserModule,
+		FormsModule,
+		HttpClientModule,
+		ConnectionServiceModule,],
 	exports: [UserListingComponent, ChatBoxComponent],
 	bootstrap: [AppComponent, UserListingComponent, ChatBoxComponent],
+	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: AppCommonServiceService,
+			multi: true
+		}, UserService
+
+	]
 })
-export class AppModule {}
+export class AppModule { }
