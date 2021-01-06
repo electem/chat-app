@@ -15,16 +15,8 @@
 
 const Route = use('Route')
 
-Route.get('/', ({ request, response }) => {
-  response.json({
-    greeting: 'Hello world in JSON'
-  })
-  //   return { greeting: 'Hello world in JSON' }
-})
-
-//employees  
-Route.get('/api/users', 'UserController.fetchAllUsers')
+Route.get('/api/users', 'UserController.fetchAllUsers').middleware('auth')
 
 //Messages
-Route.post('api/sendMessage', 'MessageController.sendMessage')
-Route.get('api/messages/:userId', 'MessageController.index')
+Route.post('api/sendMessage', 'MessageController.sendMessage').middleware('auth')
+Route.get('api/messages/:userId', 'MessageController.index').middleware('auth')
