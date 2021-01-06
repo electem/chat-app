@@ -3,29 +3,26 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
   private baseUrl: any;
+
   constructor(private http: HttpClient, @Inject(DOCUMENT) private document) {
-    this.baseUrl = 'http://localhost:3333/api/';
+	this.baseUrl = this.document.location.protocol + '//' + this.document.location.hostname + ':3333';
   }
 
-
   public fetchUsers(): Observable<any> {
-
-    return this.http.get(`${this.baseUrl}` + 'users',);
+    return this.http.get(`${this.baseUrl}` + '/api/users');
   }
 
   public fetchMessageByUserId(userId: String): Observable<any> {
-
-    return this.http.get(`${this.baseUrl}` + 'messages/' + userId,);
+    return this.http.get(`${this.baseUrl}` + '/api/messages/' + userId);
   }
-  sendMessage(messageBody) {
-    return this.http.post(`${this.baseUrl}` + '/api/createMessage', messageBody);
+
+  public sendMessage(messageBody) {
+    return this.http.post(`${this.baseUrl}` + '/api/sendMessage', messageBody);
   }
 }
