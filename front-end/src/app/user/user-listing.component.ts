@@ -5,6 +5,8 @@ import {
 import {
 	UserService
 } from '../service/user-service.service';
+import * as moment from 'moment';
+
 @Component({
 	selector: 'app-user-listing',
 	templateUrl: './user-listing.component.html',
@@ -15,7 +17,9 @@ export class UserListingComponent implements OnInit {
 	userLists: any;
 	userMessages: any = [];
 	showUserMessage = false;
-	userIdToShowMessage: any;
+  userIdToShowMessage: any;
+  messageCreatedDate : any;
+  showTime : any;
 	constructor(private userService: UserService) {}
 
 	ngOnInit() {
@@ -48,7 +52,9 @@ export class UserListingComponent implements OnInit {
 						const messages = data.Message;
 						for (let i = 0; i < messages.length; i++) {
 							if (i === messages.length - 1) {
-								this.userMessages.push(messages[i]);
+                this.userMessages.push(messages[i]);
+                this.messageCreatedDate = moment(new Date(messages[i].created_at));
+                this.showTime = this.messageCreatedDate.fromNow();
 							}
 						}
 					}
