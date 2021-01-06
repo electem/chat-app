@@ -15,6 +15,7 @@ class MessagesSchema extends Schema {
       table.string('message', 254)
       table.timestamps()
       table.date('deleted_at')
+      table.boolean('showMessage')
     })
   }
 
