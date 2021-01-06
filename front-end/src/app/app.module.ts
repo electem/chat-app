@@ -3,17 +3,18 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { UserListingComponent } from './user/user-listing.component';
-import { AgGridModule } from 'ag-grid-angular';
 import { HttpClientModule } from '@angular/common/http';
+import {UserService} from '../app/service/user-service.service';
+import { NgbdModalBasic } from '../app/chat-box/popup.component';
 
 @NgModule({
-  declarations: [AppComponent, UserListingComponent],
+  declarations: [AppComponent, UserListingComponent, NgbdModalBasic],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,],
-  providers: [],
-  exports: [UserListingComponent],
-  bootstrap: [AppComponent, UserListingComponent],
+  providers: [UserService],
+  exports: [UserListingComponent,NgbdModalBasic],
+  bootstrap: [AppComponent, UserListingComponent,NgbdModalBasic],
 })
 export class AppModule {}
