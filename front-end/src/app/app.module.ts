@@ -22,13 +22,15 @@ import {
 import {
 	ChatBoxComponent
 } from './chat-box/chatbox.component';
+import {ConnectionServiceModule} from 'ng-connection-service';
 
 @NgModule({
 	declarations: [AppComponent, UserListingComponent, ChatBoxComponent],
 	imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule, ],
+    HttpClientModule,
+    ConnectionServiceModule ],
 	providers: [UserService],
 	exports: [UserListingComponent, ChatBoxComponent],
 	bootstrap: [AppComponent, UserListingComponent, ChatBoxComponent],
