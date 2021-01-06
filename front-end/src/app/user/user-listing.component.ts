@@ -24,10 +24,6 @@ export class UserListingComponent implements OnInit {
       .subscribe(
         data => {
           this.userLists = data.users;
-          console.log(data);
-        },
-        error => {
-          console.log(error);
         });
 
   }
@@ -40,12 +36,10 @@ export class UserListingComponent implements OnInit {
     this.userService.fetchMessageByUserId(userId)
       .subscribe(
         data => {
-          //this.userMessages = data.Message;
-          //this.showUserMessage = true;
-          console.log(this.userMessages);
-        },
-        error => {
-          console.log(error);
+          let messages = data.message
+          for(let i=0; i<messages.length;i++){
+            this.userMessages.push(messages);
+          }
         });
   }
 

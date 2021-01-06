@@ -5,16 +5,16 @@ import { AppComponent } from './app.component';
 import { UserListingComponent } from './user/user-listing.component';
 import { HttpClientModule } from '@angular/common/http';
 import {UserService} from '../app/service/user-service.service';
-import { NgbdModalBasic } from '../app/chat-box/popup.component';
+import { ChatBoxComponent } from './chat-box/chatbox.component';
 
 @NgModule({
-  declarations: [AppComponent, UserListingComponent, NgbdModalBasic],
+  declarations: [AppComponent, UserListingComponent, ChatBoxComponent],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,],
   providers: [UserService],
-  exports: [UserListingComponent,NgbdModalBasic],
-  bootstrap: [AppComponent, UserListingComponent,NgbdModalBasic],
+  exports: [UserListingComponent,ChatBoxComponent],
+  bootstrap: [AppComponent, UserListingComponent,ChatBoxComponent],
 })
 export class AppModule {}

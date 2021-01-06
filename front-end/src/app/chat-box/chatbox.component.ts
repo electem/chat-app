@@ -3,10 +3,10 @@ import {Component} from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'ngbd-modal-basic',
-  templateUrl: './popup.component.html'
+  selector: 'chat-box-app',
+  templateUrl: './chatbox.component.html'
 })
-export class NgbdModalBasic {
+export class ChatBoxComponent {
   closeResult = '';
 
   constructor(private modalService: NgbModal) {}
