@@ -1,8 +1,9 @@
 
 # Following are the instruction to run the project
+
+```
 #run below command to install dependencies
 npm install
-```
 
 Copy .env.example and rename to .env
 
