@@ -33,9 +33,10 @@ export class ChatBoxComponent {
 	failedMessageCount: number;
 	userMessages: any = [];
 	userLists: any;
+	currentDate: any;
+	time: any;
 
-	currentDate = moment();
-	time = this.currentDate.fromNow();
+	
 	constructor(private modalService: NgbModal, private userService: UserService, private connectionService: ConnectionService) {
 		this.userId = this.randomIntFromInterval(1, 5);
 		this.fetchUserById(this.userId);
@@ -123,6 +124,8 @@ export class ChatBoxComponent {
 					for (let i = 0; i < this.userLists.length; i++) {
 						if (userId === this.userLists[i].id) {
 							this.profileName = this.userLists[i].name;
+							this.currentDate = moment(new Date(this.userLists[i].created_at));
+	                       this.time = this.currentDate.fromNow();
 						}
 					}
 				});
