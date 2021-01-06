@@ -12,7 +12,7 @@ export class UserService {
 
   private baseUrl: any;
   constructor(private http: HttpClient, @Inject(DOCUMENT) private document) {
-    this.baseUrl = this.document.location.protocol + '//' + this.document.location.hostname + ':3333';
+    this.baseUrl = 'http://localhost:3333/api/';
   }
 
 

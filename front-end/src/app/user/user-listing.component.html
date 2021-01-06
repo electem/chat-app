@@ -6,7 +6,7 @@
 
 	<div class="col-md-6 user-container">
 
-		<div *ngFor="let user of userLists" class="table table-striped" style="background-color: #80808057;">
+		<div *ngFor="let user of userLists" class="table table-striped">
 			<div id="parent">
 				<div id="left">
 					<!-- <img ng-src = "user.image" /> -->
@@ -14,7 +14,7 @@
 				</div>
 				<div (click)="fetchUserMessageById(user.id)" id="right">
 					<b>{{user.name}}</b>
-					<div *ngIf="showUserMessage">
+					<div *ngIf="user.showMessage">
 						<div *ngFor="let msg of userMessages">
 							{{msg.message}}
 						</div>
